@@ -23,6 +23,36 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "main_functions.h"
 
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
+                                     StackType_t **ppxTimerTaskStackBuffer,
+                                     uint32_t *pulTimerTaskStackSize )
+{
+    /* If the buffers have already been provided, they must be null. */
+    configASSERT( ( *ppxTimerTaskTCBBuffer == NULL ) && ( *ppxTimerTaskStackBuffer == NULL ) && ( *pulTimerTaskStackSize == NULL ) );
+
+    /* The buffers and the stack size are defined here. The buffers must be declared
+    with the MPU_ATTRIBUTE_ section attribute, and be aligned to the cache
+    line size when using an MPU version of FreeRTOS. */
+    static StaticTask_t xTimerTaskTCB;
+    static StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
+
+    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
+    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
+    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+}
+
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+    /* Run time stack overflow checking is performed if
+    configCHECK_FOR_STACK_OVERFLOW is set to 1 or 2 in FreeRTOSConfig.h.
+    This hook function is called if a stack overflow is detected. */
+    
+    // Log the error or halt the system
+    printf("Stack overflow in task: %s\r\n", pcTaskName);
+    
+    // Disable interrupts and loop forever
+    for (;;);
+}
+
 // This is the default main used on systems that have the standard C entry
 // point. Other devices (for example FreeRTOS or ESP32) that have different
 // requirements for entry code (like an app_main function) should specialize
