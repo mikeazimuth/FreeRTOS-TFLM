@@ -23,22 +23,41 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "main_functions.h"
 
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
-                                     StackType_t **ppxTimerTaskStackBuffer,
-                                     uint32_t *pulTimerTaskStackSize )
+/* Required if configSUPPORT_STATIC_ALLOCATION is 1 */
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
+				   StackType_t **ppxIdleTaskStackBuffer,
+				   uint32_t *pulIdleTaskStackSize)
+{
+    /* If the idle task is created using statically allocated memory then the 
+       created task function must provide all the necessary memory for the task 
+       to function. */
+    static StaticTask_t xIdleTaskTCB;
+    static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
+
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
+    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
+
+/* Required if configSUPPORT_STATIC_ALLOCATION is 1 and configUSE_TIMERS is 1 */
+extern "C" {
+void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
+				    StackType_t **ppxTimerTaskStackBuffer,
+				    uint32_t *pulTimerTaskStackSize)
 {
     /* If the buffers have already been provided, they must be null. */
     configASSERT( ( *ppxTimerTaskTCBBuffer == NULL ) && ( *ppxTimerTaskStackBuffer == NULL ) && ( *pulTimerTaskStackSize == NULL ) );
 
     /* The buffers and the stack size are defined here. The buffers must be declared
-    with the MPU_ATTRIBUTE_ section attribute, and be aligned to the cache
-    line size when using an MPU version of FreeRTOS. */
+       with the MPU_ATTRIBUTE_ section attribute, and be aligned to the cache
+       line size when using an MPU version of FreeRTOS. */
     static StaticTask_t xTimerTaskTCB;
-    static StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
+    static StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
 
     *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
     *ppxTimerTaskStackBuffer = uxTimerTaskStack;
     *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+}
 }
 
 void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
