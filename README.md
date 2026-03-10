@@ -1,6 +1,7 @@
 # FreeRTOS-TFLM
 A set of pico-tflmicro examples built on FreeRTOS.  This project depends on:
 * Linux (WSL Ubuntu used for building the image)
+* Cmake (see [pico-sdk build instructions](https://github.com/raspberrypi/pico-sdk?tab=readme-ov-file#unix-command-line))
 * ARM cross-compiler (see [pico-sdk build instructions](https://github.com/raspberrypi/pico-sdk?tab=readme-ov-file#unix-command-line))
 * Dependencies incorporated as Git submodules:
     * [pico-sdk](https://github.com/raspberrypi/pico-sdk)
@@ -35,3 +36,6 @@ Simply plug in the RP2350 board, press and release both buttons, and an RP2350 d
 
 A serial console such as PuTTY may be used to view serial console output.  There is some delay built into the example to allow for connecting the serial console right after the UF2 file copy completes.  If it is connected in time, no serial messages will be lost.
 
+## Acknowlegments
+
+The hello world example is based on the pico-tflmicro hello world example (Pete Warden) and a FreeRTOS hello world example ([Jon Durrant](https://github.com/jondurrant/RPIPico2-Exp)).
