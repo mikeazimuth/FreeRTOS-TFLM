@@ -38,4 +38,4 @@ A serial console such as PuTTY may be used to view serial console output.  There
 
 ## Acknowlegments
 
-The hello world example is based on the pico-tflmicro hello world example (Pete Warden) and a FreeRTOS hello world example ([Jon Durrant](https://github.com/jondurrant/RPIPico2-Exp)).
+The hello world example is based on the pico-tflmicro hello world example ([Pete Warden](https://github.com/raspberrypi/pico-tflmicro)) and a FreeRTOS hello world example ([Jon Durrant](https://github.com/jondurrant/RPIPico2-Exp)).
