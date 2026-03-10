@@ -1,5 +1,5 @@
 # FreeRTOS-TFLM
-A set of pico-tflmicro examples built on FreeRTOS.  This project depends on:
+This project presents a set of pico-tflmicro examples built on FreeRTOS.  This project depends on:
 * Linux (WSL Ubuntu used for building the image)
 * Cmake (see [pico-sdk build instructions](https://github.com/raspberrypi/pico-sdk?tab=readme-ov-file#unix-command-line))
 * ARM cross-compiler (see [pico-sdk build instructions](https://github.com/raspberrypi/pico-sdk?tab=readme-ov-file#unix-command-line))
