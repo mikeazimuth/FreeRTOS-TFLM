@@ -17,6 +17,7 @@
 #include "model_fp32.h"
 #define ARENA_SIZE 32768
 #endif
+#define NUM_INPUTS 4
 
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
@@ -28,6 +29,7 @@ namespace {
   unsigned int inference_count = 0;
   const int kInferencesPerCycle = 100;
   constexpr int kTensorArenaSize = ARENA_SIZE;
+  int num_inputs = NUM_INPUTS;
   uint8_t tensor_arena[kTensorArenaSize];
 }  // namespace
 
@@ -109,7 +111,7 @@ void mainTask(void *params){
     // Run inference, and report any error
     TfLiteStatus invoke_status = interpreter->Invoke();
     if (invoke_status != kTfLiteOk) {
-      printf("Invoke failed on x: %f\n", static_cast<double>(x));
+      printf("Invoke %u failed\n", inference_count);
       return;
     }
 
