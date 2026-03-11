@@ -37,6 +37,15 @@ namespace {
 #define TASK_PRIORITY ( tskIDLE_PRIORITY + 1UL ) //Standard Task priority
 #define GP_BLINK 25
 
+#define INSERT_RESOLVER(a) \
+  { \
+    TfLiteStatus resolve_status = a; \
+    if (resolve_status != kTfLiteOk) { \
+      printf("Op resolution failed"); \
+      return; \
+    } \
+  }
+
 
 /***
  * Debug function to look at Task Stats
@@ -165,13 +174,17 @@ void setup() {
   }
 
   // This pulls in all the operation implementations we need.
-  // NOLINTNEXTLINE(runtime-global-variables)
-  static tflite::MicroMutableOpResolver<1> resolver;
-  TfLiteStatus resolve_status = resolver.AddFullyConnected();
-  if (resolve_status != kTfLiteOk) {
-    printf("Op resolution failed");
-    return;
-  }
+  static tflite::MicroMutableOpResolver<10> resolver;
+  INSERT_RESOLVER(resolver.AddSlice())
+  INSERT_RESOLVER(resolver.AddFullyConnected())
+  INSERT_RESOLVER(resolver.AddAdd())
+  INSERT_RESOLVER(resolver.AddLogistic())
+  INSERT_RESOLVER(resolver.AddMul())
+  INSERT_RESOLVER(resolver.AddTanh())
+  INSERT_RESOLVER(resolver.AddSub())
+  INSERT_RESOLVER(resolver.AddRelu())
+  INSERT_RESOLVER(resolver.AddConcatenation())
+  INSERT_RESOLVER(resolver.AddReshape())
 
   // Build an interpreter to run the model with.
   static tflite::MicroInterpreter static_interpreter(
