@@ -48,6 +48,16 @@ The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
 * Build the project:
   * Open the Command Palette (Ctrl+Shift+P) and run "CMake: Build" or select the Build button from the status bar. The compiled executable will be located in the build directory.
 * Run and Debug:
+  * Ensure that usbipd-win has been installed under Windows and the RP2350 device is mapped.
+    * It may be necessary to map the device the first time it is used
+      * curl https://raw.githubusercontent.com/raspberrypi/picotool/master/udev/60-picotool.rules | sudo tee /etc/udev/rules.d/60-picotool.rules
+      * sudo usermod -a -G dialout $USER
+      * sudo udevadm control --reload-rules
+      * sudo udevadm trigger
+    * From admin cmd prompt:  usbipd list
+      * Find the BUSID of the RP2350 and substitute below
+    * From admin cmd prompt:  usbipd bind --busid BUSID
+    * From admin cmd prompt:  usbipd attach --wsl Ubuntu --busid BUSID
   * Ensure that the C/C++ extension and Cortex-Debug extension are installed in VS Code.
   * Ensure that the debug probe (separate board) is setup correctly and connected to the RP2350.
   * Set a breakpoint in your source code by clicking in the editor margin.
@@ -61,7 +71,15 @@ The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
 
 Simply plug in the RP2350 board, press and release both buttons, and an RP2350 drive will appear under the Windows filesystem.  Then just copy the UF2 file onto the RP2350 drive.  When the file copy finishes, the RP2350 will reboot and the firmware will begin running (LED light will start blinking, NN results will be written to console).
 
+### Using Visual Studio Code
+
+When the device is properly mapped using usbipd (from a Windows Admin Cmd shell -- see above), it is only necessary to click the Run Project line under RASPBERRY PI PICO PROJECT: QUICK ACCESS to flash the firmware and run the project.
+
+## Serial monitor
+
 A serial console such as PuTTY may be used to view serial console output.  There is some delay built into the example to allow for connecting the serial console right after the UF2 file copy completes.  If it is connected in time, no serial messages will be lost.
+
+Note:  While there is a serial monitor built into VS Code, it cannot be used under WSL2.  WSL2 does not allow access to serial devices.  So it is necessary to use PuTTY from Windows even when developing with VS Code under WSL2.
 
 ## Acknowlegments
 
