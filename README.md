@@ -16,6 +16,8 @@ The following files are included:
 
 ## Build Instructions
 
+### Using Command Line
+
 ```
 git submodule update --init
 source setup.sh
@@ -30,7 +32,32 @@ make -j 4
 
 The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
 
+### Using Visual Studio Code
+
+* Run setup.sh as in the command line instructions to set up CMakeLists.txt and environmental variables.
+* Open your project in VS Code from WSL:
+  * Open an WSL terminal.
+  * Navigate to deps/pico-tflmicro
+  * Run the command: code .
+    * If VS Code is properly installed (with CMake and WSL extensions), the VS Code window will open and you'll see "WSL: Ubuntu" (or your distro name) in the bottom-left corner of the status bar, indicating a remote connection.
+* Select a CMake Kit:
+  * Open the Command Palette (Ctrl+Shift+P) and run the command "CMake: Select a Kit".
+  * Select the GCC arm-none-eabi compiler.
+* Configure the project:
+  * Open the Command Palette (Ctrl+Shift+P) and run "CMake: Configure". This will generate the build files in a build directory within your project folder in WSL. The output will appear in the "CMake" pane of the Output window.
+* Build the project:
+  * Open the Command Palette (Ctrl+Shift+P) and run "CMake: Build" or select the Build button from the status bar. The compiled executable will be located in the build directory.
+* Run and Debug:
+  * Ensure that the C/C++ extension and Cortex-Debug extension are installed in VS Code.
+  * Ensure that the debug probe (separate board) is setup correctly and connected to the RP2350.
+  * Set a breakpoint in your source code by clicking in the editor margin.
+  * Select the appropriate debug target from the debug dropdown menu in the status bar or the Run and Debug view.
+  * Press F5 or select "Run > Start Debugging" to build and launch your application with the debugger attached. Program output will be displayed in the debug console or the integrated terminal.
+
+
 ## Installation Instructions
+
+### Using Command Line
 
 Simply plug in the RP2350 board, press and release both buttons, and an RP2350 drive will appear under the Windows filesystem.  Then just copy the UF2 file onto the RP2350 drive.  When the file copy finishes, the RP2350 will reboot and the firmware will begin running (LED light will start blinking, NN results will be written to console).
 
