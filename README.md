@@ -16,8 +16,6 @@ The following files are included:
 
 ## Build Instructions
 
-### Using Command Line
-
 ```
 git submodule update --init
 source setup.sh
@@ -25,6 +23,11 @@ cd deps/pico-sdk
 git submodule update --init
 cd ../pico-tflmicro/
 mkdir build
+```
+
+### Using Command Line
+
+```
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DPICO_PLATFORM=rp2350 -DPICO_BOARD=pico2 ..
 make -j 4
@@ -34,30 +37,48 @@ The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
 
 ### Using Visual Studio Code
 
-* Run setup.sh as in the command line instructions to set up CMakeLists.txt and environmental variables.
+* Make sure VS Code has the following extensions installed:
+  * CMake
+  * CMake Tools Fork
+  * Cortex-Debug
+  * Raspberry Pi Pico
+  * C/C++
+* Notes
+  * I have a few others installed but don't think they are really needed:  C/C++ Extension Pack, debug-tracker-vscode, GitHub Copilot Chat, MemoryView, MicroPico, Peripheral Viewer, Pylance, Python, Python Debugger, Python Environments, RTOS Views, Serial Monitor
+  * Also, I have setup a Pico profile as my default profile (see description [here](https://www.youtube.com/watch?v=TJSyzF2w1Dc).
 * Open your project in VS Code from WSL:
   * Open an WSL terminal.
   * Navigate to deps/pico-tflmicro
   * Run the command: code .
     * If VS Code is properly installed (with CMake and WSL extensions), the VS Code window will open and you'll see "WSL: Ubuntu" (or your distro name) in the bottom-left corner of the status bar, indicating a remote connection.
-* Select a CMake Kit:
-  * Open the Command Palette (Ctrl+Shift+P) and run the command "CMake: Select a Kit".
-  * Select the GCC arm-none-eabi compiler.
-* Configure the project:
-  * Open the Command Palette (Ctrl+Shift+P) and run "CMake: Configure". This will generate the build files in a build directory within your project folder in WSL. The output will appear in the "CMake" pane of the Output window.
-* Build the project:
-  * Open the Command Palette (Ctrl+Shift+P) and run "CMake: Build" or select the Build button from the status bar. The compiled executable will be located in the build directory.
-* Run and Debug:
+    * Click "Yes" (trust the authors)
+#* Select a CMake Kit (this may not be necessary if you have already configured a few projects):
+#  * Open the Command Palette (Ctrl+Shift+P) and run the command "CMake: Select a Kit".
+#  * Select the GCC arm-none-eabi compiler.
+* Create a Raspberry Pi Pico project (this may not be necessary)
+  * Open the Command Palette (Ctrl+Shift+P) and run "Raspberry Pi Pico: Import Pico Project"
+  * Very quickly click "Yes" on the window that appears in the lower right corner.  If you miss it, there seems to be no way to get it back.
+  * Click Import on the page that appears in the main panel.
+  * Click Active Kit in the toolbar at the bottom and choose Pico as the kit.
+* Open the Raspberry Pi Pico Project Quick Access panel by clicking on the icon along the left side of VS Code (the one that looks like a Pico board).
+* Click Compile Project in the Raspberry Pi Pico Project: Quick Access panel
+* Running on RP2350 Hardware:
   * Ensure that usbipd-win has been installed under Windows and the RP2350 device is mapped.
-    * It may be necessary to map the device the first time it is used
+    * It may be necessary (from bash shell in WSL) to map the device the first time it is used
       * curl https://raw.githubusercontent.com/raspberrypi/picotool/master/udev/60-picotool.rules | sudo tee /etc/udev/rules.d/60-picotool.rules
       * sudo usermod -a -G dialout $USER
       * sudo udevadm control --reload-rules
       * sudo udevadm trigger
-    * From admin cmd prompt:  usbipd list
-      * Find the BUSID of the RP2350 and substitute below
-    * From admin cmd prompt:  usbipd bind --busid BUSID
-    * From admin cmd prompt:  usbipd attach --wsl Ubuntu --busid BUSID
+  * From Windows admin cmd prompt:  usbipd list
+    * Find the BUSID of the RP2350 and substitute below
+  * From admin cmd prompt:  usbipd bind --busid BUSID
+  * From admin cmd prompt:  usbipd attach --wsl Ubuntu --busid BUSID
+    * It may be necessary to run the attach command every time the RP2350 is rebooted
+  * Copy the elf file for the target you wish to run to deps/pico-tflmicro/build and rename it to pico-tflmicro.elf
+    * The Raspberry Pi Pico Extension cannot handle projects with multiple targets.
+    * It is necessary to copy and rename the target every time it is recompiled.
+  * Run the target by clicking Run Project (USB) in the Raspberry Pi Pico Project: Quick Access panel
+* Debugging on RP2350 Hardware
   * Ensure that the C/C++ extension and Cortex-Debug extension are installed in VS Code.
   * Ensure that the debug probe (separate board) is setup correctly and connected to the RP2350.
   * Set a breakpoint in your source code by clicking in the editor margin.
@@ -73,7 +94,7 @@ Simply plug in the RP2350 board, press and release both buttons, and an RP2350 d
 
 ### Using Visual Studio Code
 
-When the device is properly mapped using usbipd (from a Windows Admin Cmd shell -- see above), it is only necessary to click the Run Project line under RASPBERRY PI PICO PROJECT: QUICK ACCESS to flash the firmware and run the project.
+When the device is properly mapped using usbipd (from a Windows Admin Cmd shell -- see above), it is only necessary to click the Run Project (USB) line under RASPBERRY PI PICO PROJECT: QUICK ACCESS to flash the firmware and run the project.
 
 ## Serial monitor
 
