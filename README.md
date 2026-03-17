@@ -54,7 +54,7 @@ The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
     * Click "Yes" (trust the authors)
 * Create a Raspberry Pi Pico project
   * Open the Command Palette (Ctrl+Shift+P) and run "Raspberry Pi Pico: Import Pico Project"
-  * Very quickly click "Yes" on the window that appears in the lower right corner.  If you miss it, there seems to be no way to get it back.
+  * Very quickly click "Yes" on the window that appears in the lower right corner.  If you miss it before it disappears, you can click on the bell icon in the lower right to get it back.
   * Click Import on the page that appears in the main panel.
   * Click Active Kit in the toolbar at the bottom and choose Pico as the kit.
 * Open the Raspberry Pi Pico Project Quick Access panel by clicking on the icon along the left side of VS Code (the one that looks like a Pico board).
