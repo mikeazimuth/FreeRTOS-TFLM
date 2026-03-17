@@ -13,6 +13,7 @@ The following files are included:
 * README.md - this file
 * setup.sh - a bash script to set environmental variables and modify CMakeLists.txt to add new examples
 * examples/freertos_nn - hello world example that blinks the LED, runs a simple NN, and reports to console
+* examples/freertos_gru - BMS SOC prediction example that also blinks the LED
 
 ## Build Instructions
 
