@@ -11,43 +11,42 @@
 
 
 //Blink Delay
-#define DELAY			500
+#define DELAY 500
 
 /***
  * Constructor
  * @param gp - GPIO Pad number for LED
  */
 BlinkAgent::BlinkAgent(uint8_t gp) {
-	xLedPad = gp;
-
+  xLedPad = gp;
 }
 
 /***
  * Destructor
  */
 BlinkAgent::~BlinkAgent() {
-	stop();
+  stop();
 }
-
 
  /***
   * Main Run Task for agent
   */
  void BlinkAgent::run(){
 
-	printf("Blink Started\n");
+   printf("Blink Started\n");
 
-	gpio_init(xLedPad);
-
-	gpio_set_dir(xLedPad, GPIO_OUT);
-
-	while (true) { // Loop forever
-		gpio_put(xLedPad, 1);
-		vTaskDelay(DELAY);
-		gpio_put(xLedPad, 0);
-		vTaskDelay(DELAY);
-	}
-
+   gpio_init(xLedPad);
+   
+   gpio_set_dir(xLedPad, GPIO_OUT);
+   
+   while (true) { // Loop forever
+     printf("Blink on\n");
+     gpio_put(xLedPad, 1);
+     vTaskDelay(DELAY);
+     printf("Blink off\n");
+     gpio_put(xLedPad, 0);
+     vTaskDelay(DELAY);
+   }
  }
 
 /***

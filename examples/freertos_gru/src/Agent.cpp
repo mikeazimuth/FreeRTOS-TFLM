@@ -8,6 +8,7 @@
 
 #include "Agent.h"
 #include <string.h>
+#include <stdio.h>
 
 /***
  * Constructor
@@ -71,6 +72,7 @@ bool Agent::start(const char *name, UBaseType_t priority){
 	} else {
 		strcpy(pName, name);
 	}
+	printf("Creating subtask %s\n", name);
 	res = xTaskCreate(
 			Agent::vTask,       /* Function that implements the task. */
 		pName,   /* Text name for the task. */
