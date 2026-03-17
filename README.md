@@ -43,16 +43,16 @@ The UF2 file for freertos_nn is in: examples/freertos_nn/src/freertos_nn.uf2
   * Cortex-Debug
   * Raspberry Pi Pico
   * C/C++
-* Notes
+* Note regarding extensions
   * I have a few others installed but don't think they are really needed:  C/C++ Extension Pack, debug-tracker-vscode, GitHub Copilot Chat, MemoryView, MicroPico, Peripheral Viewer, Pylance, Python, Python Debugger, Python Environments, RTOS Views, Serial Monitor
-  * Also, I have setup a Pico profile as my default profile (see description [here](https://www.youtube.com/watch?v=TJSyzF2w1Dc).
+  * Also, I have setup a Pico profile as my default profile (see description [here](https://www.youtube.com/watch?v=TJSyzF2w1Dc)).
 * Open your project in VS Code from WSL:
   * Open an WSL terminal.
   * Navigate to deps/pico-tflmicro
   * Run the command: code .
     * If VS Code is properly installed (with CMake and WSL extensions), the VS Code window will open and you'll see "WSL: Ubuntu" (or your distro name) in the bottom-left corner of the status bar, indicating a remote connection.
     * Click "Yes" (trust the authors)
-* Create a Raspberry Pi Pico project (this may not be necessary)
+* Create a Raspberry Pi Pico project
   * Open the Command Palette (Ctrl+Shift+P) and run "Raspberry Pi Pico: Import Pico Project"
   * Very quickly click "Yes" on the window that appears in the lower right corner.  If you miss it, there seems to be no way to get it back.
   * Click Import on the page that appears in the main panel.
