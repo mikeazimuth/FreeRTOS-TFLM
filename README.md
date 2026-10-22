@@ -103,3 +103,16 @@ Note:  While there is a serial monitor built into VS Code, it cannot be used und
 ## Acknowlegments
 
 The hello world example is based on the pico-tflmicro hello world example ([Pete Warden](https://github.com/raspberrypi/pico-tflmicro)) and a FreeRTOS hello world example ([Jon Durrant](https://github.com/jondurrant/RPIPico2-Exp)).
+
+## Toolchain versions
+
+Recorded on 2026-10-22 from the WSL working copy (`~/ARM/FreeRTOS-TFLM`), not from documentation. Each row says where the version was read from.
+
+| Component | Version | Source |
+| --- | --- | --- |
+| Compiler | Arm GNU Toolchain 14.2.Rel1 (`arm-none-eabi-gcc` 14.2.1 20241119), installed by the Raspberry Pi Pico VS Code extension (`~/.pico-sdk/toolchain/14_2_Rel1`) | `.comment` section of `deps/pico-tflmicro/build/examples/*/…elf` and `CMakeCache.txt` |
+| Build type / platform / board | Debug / `rp2350-arm-s` / `pico2` | `deps/pico-tflmicro/build/CMakeCache.txt` |
+| pico-sdk used for the build | 2.2.0, from the VS Code extension (`~/.pico-sdk/sdk/2.2.0`); the `deps/pico-sdk` submodule is pinned to 2.2.0 as well (a1438dff) | `CMakeCache.txt`, submodule commit |
+| pico-tflmicro (TensorFlow Lite Micro port, with its bundled CMSIS-NN) | dfea53b9 (2024-12-26) | submodule commit |
+| FreeRTOS-Kernel (Raspberry Pi fork) | 4f7299d6 (2024-08-08) | submodule commit |
+| picotool | 2.2.0 (a7eb398) | `deps/picotool/picotool-src` |
